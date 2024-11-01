@@ -1,4 +1,3 @@
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:notetaker/widgets/add_note_btn.dart';
 import 'package:notetaker/widgets/category_list.dart';
