@@ -44,7 +44,7 @@ class NotesList extends ConsumerWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
-                      .copyWith(fontSize: 14),
+                      .copyWith(fontSize: 14, color: Colors.black),
                 ),
                 const SizedBox(
                   height: 3,
