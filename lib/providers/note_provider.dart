@@ -5,6 +5,10 @@ import 'package:notetaker/models/note.dart';
 class NotesNotifier extends StateNotifier<List<Note>> {
   // setting the initial state data
   NotesNotifier() : super(notes);
+
+  void addNote(Note note) async {
+    state = [note, ...state];
+  }
 }
 
 final notesProvider =
