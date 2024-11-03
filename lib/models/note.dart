@@ -2,7 +2,7 @@ class Note {
   Note({
     required this.title,
     required this.note,
-    required this.category,
+    this.category,
     required this.createdAt,
     required this.updatedAt,
     this.isTagged = false,
@@ -10,7 +10,7 @@ class Note {
 
   final String title;
   final String note;
-  final String category;
+  final String? category;
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isTagged;
