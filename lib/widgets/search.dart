@@ -23,8 +23,8 @@ class Search extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         decoration: const InputDecoration(
           border: InputBorder.none,
-          enabledBorder: InputBorder.none, // No border when enabled
-          focusedBorder: InputBorder.none, // No border when
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
           prefixIcon: Icon(
             FeatherIcons.search,
             color: Color.fromRGBO(173, 181, 189, 1),
