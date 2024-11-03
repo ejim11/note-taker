@@ -1,5 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:notetaker/pages/add_note.dart';
 
 class AddNoteBtn extends StatelessWidget {
   const AddNoteBtn({super.key});
@@ -10,6 +11,14 @@ class AddNoteBtn extends StatelessWidget {
       bottom: 30,
       right: 0,
       child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => const AddNote(),
+            ),
+          );
+        },
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
