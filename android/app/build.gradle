@@ -37,6 +37,24 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+      signingConfigs {
+        release {
+            keyAlias 'my-key-alias'
+            keyPassword 'Nigeriannavy'
+            storeFile file('../../../../my-release-key.jks')
+            storePassword 'Nigeriannavy'
+        }
+    }
+
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false // Disable Proguard (optional)
+            shrinkResources false // Optional
+        }
+    }
 }
 
 flutter {
