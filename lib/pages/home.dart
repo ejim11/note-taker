@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notetaker/providers/category_provider.dart';
 import 'package:notetaker/widgets/add_note_btn.dart';
 import 'package:notetaker/widgets/category_list.dart';
 import 'package:notetaker/widgets/date_filter.dart';
@@ -9,31 +11,23 @@ import 'package:notetaker/widgets/search.dart';
 import '../models/date.dart';
 import '../models/debouncer.dart';
 
-class Home extends StatefulWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<Home> createState() {
     return _HomeState();
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ConsumerState<Home> {
   final _searchInputController = TextEditingController();
 
   final debouncer = Debouncer(const Duration(milliseconds: 1000));
 
-  final List<String> categories = [
-    'All',
-    'Important',
-    'Lecture Notes',
-    'To-do list',
-    'shopping list',
-    'dairy'
-  ];
-
   late Date _chosenDate;
   late String _chosenCategory;
+  late String _searchText;
 
   void setDate(Date date) {
     setState(() {
@@ -47,15 +41,25 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _onChangeSearchText(String text) {
+    setState(() {
+      _searchText = text;
+    });
+  }
+
   @override
   void initState() {
     DateTime now = DateTime.now();
     int day = now.day;
-
     int weekday = now.weekday;
-    super.initState();
-    _chosenDate = Date(day: weekday, date: day);
+    int month = now.month;
+    int year = now.year;
+
+    _chosenDate = Date(day: weekday, date: day, month: month, year: year);
     _chosenCategory = 'All';
+    _searchText = "";
+
+    super.initState();
   }
 
   @override
@@ -66,6 +70,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categories = ref.watch(categoryProvider);
+
     double safeAreaTopPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -83,7 +89,9 @@ class _HomeState extends State<Home> {
                   const SizedBox(
                     height: 3,
                   ),
-                  Search(inputController: _searchInputController),
+                  Search(
+                      inputController: _searchInputController,
+                      onChangeText: _onChangeSearchText),
                   const SizedBox(
                     height: 25,
                   ),
@@ -98,7 +106,11 @@ class _HomeState extends State<Home> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const NotesList()
+                  NotesList(
+                    chosenCategory: _chosenCategory,
+                    chosenDate: _chosenDate,
+                    searchText: _searchText,
+                  )
                 ],
               ),
             ),
