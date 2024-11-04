@@ -20,6 +20,8 @@ class DateFilter extends StatelessWidget {
         days.add({
           'day': currentDate.weekday,
           'date': currentDate.day,
+          'month': currentDate.month,
+          'year': currentDate.year
         });
       }
 
@@ -27,7 +29,11 @@ class DateFilter extends StatelessWidget {
     }
 
     List<Date> days = getDaysInMonth(2024, 11)
-        .map((day) => Date(day: day['day'], date: day['date']))
+        .map((day) => Date(
+            day: day['day'],
+            date: day['date'],
+            month: day['month'],
+            year: day['year']))
         .toList();
 
     bool isSameDate(int date) {
