@@ -4,9 +4,13 @@ import 'package:feather_icons/feather_icons.dart';
 import '../models/debouncer.dart';
 
 class Search extends StatelessWidget {
-  Search({super.key, required this.inputController});
+  Search(
+      {super.key, required this.inputController, required this.onChangeText});
 
   final TextEditingController inputController;
+
+  final Function(String text) onChangeText;
+
   final debouncer = Debouncer(const Duration(milliseconds: 1000));
 
   @override
@@ -37,9 +41,11 @@ class Search extends StatelessWidget {
         onChanged: (value) {
           if (inputController.text.isNotEmpty) {
             debouncer.run(() {
-              print(value);
+              onChangeText(value);
             });
-          } else {}
+          } else {
+            onChangeText(value);
+          }
         },
       ),
     );
