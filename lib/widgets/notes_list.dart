@@ -1,24 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notetaker/models/date.dart';
 import 'package:notetaker/providers/note_provider.dart';
+import 'package:notetaker/widgets/note_item.dart';
 
-class NotesList extends ConsumerWidget {
-  const NotesList({super.key});
+class NotesList extends ConsumerStatefulWidget {
+  const NotesList({
+    super.key,
+    required this.chosenCategory,
+    required this.chosenDate,
+    required this.searchText,
+  });
+
+  final String chosenCategory;
+  final Date chosenDate;
+  final String searchText;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notes = ref.watch(notesProvider);
+  ConsumerState<NotesList> createState() {
+    return _NotesListState();
+  }
+}
 
-    List<Color> cardColors = const [
-      Color.fromRGBO(195, 220, 253, 1),
-      Color.fromRGBO(255, 216, 244, 1),
-      Color.fromRGBO(251, 246, 270, 1),
-      Color.fromRGBO(176, 233, 196, 1),
-      Color.fromRGBO(252, 250, 217, 1),
-      Color.fromRGBO(241, 219, 245, 1),
-      Color.fromRGBO(217, 232, 252, 1),
-      Color.fromRGBO(255, 219, 227, 1)
-    ];
+class _NotesListState extends ConsumerState<NotesList> {
+  @override
+  Widget build(BuildContext context) {
+    final notes = ref
+        .watch(notesProvider)
+        .where((note) {
+          bool areSameDate = widget.chosenDate.year == note.createdAt.year &&
+              widget.chosenDate.month == note.createdAt.month &&
+              widget.chosenDate.date == note.createdAt.day;
+
+          if (areSameDate) return true;
+          return false;
+        })
+        .toList()
+        .where((note) {
+          if (widget.chosenCategory == 'All') return true;
+          if (note.category == widget.chosenCategory) return true;
+
+          return false;
+        })
+        .toList()
+        .where((note) {
+          if (widget.searchText == '') return true;
+          if (note.title
+              .toLowerCase()
+              .contains(widget.searchText.toLowerCase())) {
+            return true;
+          }
+          return false;
+        })
+        .toList();
+
+    if (notes.isNotEmpty) {
+      print("cat");
+      print(notes[0].category);
+    }
+
+    if (notes.isEmpty) {
+      return SizedBox(
+        width: double.infinity,
+        height: 150,
+        child: Center(
+          child: Text(
+            'No Notes!',
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: Theme.of(context).colorScheme.primary),
+          ),
+        ),
+      );
+    }
 
     return GridView.builder(
       shrinkWrap: true,
@@ -32,33 +87,13 @@ class NotesList extends ConsumerWidget {
       ),
       itemCount: notes.length,
       itemBuilder: (context, index) {
-        return Card(
-          color: cardColors[index % 8],
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  notes[index].title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontSize: 14, color: Colors.black),
-                ),
-                const SizedBox(
-                  height: 3,
-                ),
-                Text(
-                  notes[index].note,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontSize: 12),
-                )
-              ],
-            ),
-          ),
+        // return Text(notes[index].title);
+        return NoteItem(
+          id: notes[index].id,
+          title: notes[index].title,
+          content: notes[index].note,
+          index: index,
+          category: notes[index].category,
         );
       },
     );
