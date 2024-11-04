@@ -5,6 +5,8 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:notetaker/providers/note_provider.dart';
 import 'package:notetaker/widgets/category_modal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:remix_icon_icons/remix_icon_icons.dart';
@@ -12,7 +14,7 @@ import 'package:share_plus/share_plus.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:remix_icon_icons/remix_icon_icons.dart';
 
-class NoteEdit extends StatefulWidget {
+class NoteEdit extends ConsumerStatefulWidget {
   const NoteEdit(
       {super.key,
       required this.title,
@@ -28,10 +30,10 @@ class NoteEdit extends StatefulWidget {
   final String? category;
 
   @override
-  State<NoteEdit> createState() => _NoteEditState();
+  ConsumerState<NoteEdit> createState() => _NoteEditState();
 }
 
-class _NoteEditState extends State<NoteEdit> {
+class _NoteEditState extends ConsumerState<NoteEdit> {
   // QuillController _controller = QuillController.basic();
 
   bool _isDirty = false;
@@ -175,7 +177,10 @@ class _NoteEditState extends State<NoteEdit> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              ref.read(notesProvider.notifier).deleteNote(widget.id);
+              Navigator.pop(context);
+            },
             icon: Icon(
               size: 20,
               RemixIcon.delete_bin,

@@ -20,6 +20,16 @@ class NotesNotifier extends StateNotifier<List<Note>> {
     state = [...filteredNotes];
   }
 
+  void deleteNote(String id) {
+    final filteredNotes = state.where((note) {
+      if (note.id == id) return false;
+
+      return true;
+    });
+
+    state = [...filteredNotes];
+  }
+
   void setCategory(String id, String category) {
     final existingNoteIndex = state.indexWhere((note) {
       if (note.id == id) return true;
