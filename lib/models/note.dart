@@ -15,7 +15,7 @@ class Note {
   final String id;
   final String title;
   final String note;
-  final String? category;
+  String? category;
   final DateTime createdAt;
   final DateTime updatedAt;
 }
