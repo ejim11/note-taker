@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends ConsumerWidget {
   const CategoryList(
       {super.key,
       required this.categories,
@@ -12,7 +13,7 @@ class CategoryList extends StatelessWidget {
   final Function onChoseCategory;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -23,6 +24,7 @@ class CategoryList extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   onChoseCategory(category);
+                  // ref.read(notesProvider.notifier).filterNotes(category);
                 },
                 child: Container(
                   padding:
