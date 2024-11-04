@@ -30,23 +30,23 @@ List<Note> notes = [
     note:
         "classes were equally demanding, but I felt more at ease, thanks to the familiar faces I've come to know throughout my time here.",
     category: 'Lecture Notes',
-    createdAt: DateTime(2024, 11, 4),
-    updatedAt: DateTime(2024, 11, 4),
+    createdAt: DateTime(2024, 11, 3),
+    updatedAt: DateTime(2024, 11, 3),
   ),
   Note(
     title: 'Campus tour',
     note:
         "I joined the sea of students bustling around, all with different destinations in mind. The campus was alive with energy, as everyone seemed to be on a ...",
     category: 'To-do list',
-    createdAt: DateTime(2024, 11, 5),
-    updatedAt: DateTime(2024, 11, 6),
+    createdAt: DateTime(2024, 11, 2),
+    updatedAt: DateTime(2024, 11, 2),
   ),
   Note(
     title: "Food rollercoaster",
     note:
         "Food Rollercoater', note: 'juggling between college life's demands and the desire to savor every moment of this exhilarating journ woke up to the bl sound of my alarm",
     category: 'dairy',
-    createdAt: DateTime(2024, 11, 6),
-    updatedAt: DateTime(2024, 11, 6),
+    createdAt: DateTime(2024, 11, 1),
+    updatedAt: DateTime(2024, 11, 2),
   )
 ];
