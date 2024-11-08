@@ -65,7 +65,7 @@ class _CategoryModalState extends ConsumerState<CategoryModal> {
             ),
           ),
           Expanded(
-              child: Container(
+              child: SizedBox(
             width: double.infinity,
             child: SingleChildScrollView(
               child: SizedBox(
